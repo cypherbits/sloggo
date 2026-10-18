@@ -39,6 +39,10 @@ RUN pnpm build
 # Stage 3: Final runtime image
 FROM gcr.io/distroless/cc-debian13 AS runtime
 
+# Connects the published image to its source repository in GHCR.
+ARG SOURCE_URL
+LABEL org.opencontainers.image.source=$SOURCE_URL
+
 WORKDIR /app
 
 COPY --from=go-builder /app/sloggo /app/sloggo
